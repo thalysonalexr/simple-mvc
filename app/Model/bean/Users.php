@@ -6,7 +6,7 @@
  * @link http://github.com/thalysonrodrigues
  *
  * @version 1.0
- * @package simple-mvc
+ * @package Model\bean
  */
 
 namespace Model\bean;
