@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <title>Lista de usuários</title>
+        <!-- Metadados -->
+        <meta name="application-name" content="simple-mvc">
+        <meta name="author" content="Thalyson Alexandre Rodrigues de Sousa">
+        <meta name="description" content="Lista de usuários do sistema">
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="assets/css/master-style.css">
+        <style>
+            /**
+             *
+             * @autor Thalyson Alexandre Rodrigues de Sousa <http://github.com/thalysonrodrigues>
+             */
+
+            @charset "UTF-8";
+
+            @import url('https://fonts.googleapis.com/css?family=Inconsolata');
+
+            *{
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-weight: lighter;
+                box-sizing: border-box;
+                font-family: 'Inconsolata', monospace;
+            }
+
+            html, body, main{
+                width: 100%;
+                min-height: 100%;
+            }
+
+            #interface{
+                background-color: #fcfcfc;
+            }
+
+            .mytable{
+                margin: auto;
+                border: 1px solid #dbdbdb;
+            }
+
+            .mytable th{
+                word-wrap: normal;
+                width: 10%;
+                text-align: left;
+                background-color: #468cfc;
+                font-weight: 600;
+                font-size: 1.1em;
+            }
+
+            .mytable th, .mytable td{ padding: 1%; }
+
+            .center{ text-align: center; }
+
+            .mytable td{
+                background-color: #bfd7ff;
+                font-size: 1em;
+            }
+        </style>
+        <!-- JS / JQUERY -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    </head>
+    <body>
+        <main id="interface">
+
+            <h2 class=".msg"></h2>
+            <table id="users" class="mytable">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Sobrenome</th>
+                        <th>Nome de usuário</th>
+                        <th>Senha de usuário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <script>
+                        var html = "";
+                        var url = "data-users";
+
+                        $.ajax({
+                            url: url,
+                            cache: false,
+                            dataType: "json",
+                            beforeSend: function() {
+                                $( ".msg" ).html( "Carregando..." );
+                            },
+                            error: function() {
+                                $( ".msg" ).html( "Ocorreu um erro durante a requisição do servidor" )
+                            },
+                            success: function(data) {
+                                for(var user of data) {
+                                    html += "<tr>";
+                                    html += "<td>" + user.id + "</td>";
+                                    html += "<td>" + user.fname + "</td>";
+                                    html += "<td>" + user.lname + "</td>";
+                                    html += "<td>" + user.username + "</td>";
+                                    html += "<td>" + user.password + "</td>";
+                                    html += "</tr>";
+                                }
+
+                                $( "table#users tbody" ).html(html);
+                                $( ".msg" ).html( "Dados carregados com sucesso." );
+                            },
+
+                        });
+                    </script>
+                </tbody>
+            </table>
+        </main>
+    </body>
+</html>
